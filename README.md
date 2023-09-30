@@ -1,10 +1,9 @@
 ### Getting Started
 This backend version of the lunch-preference application provides REST API endpoints.
 
-# Running lunch-preference API locally
-# With maven command line (Set JAVA_HOME if needed)
-
-# Clone the repository:
+### Running lunch-preference API locally
+### With maven command line (Set JAVA_HOME if needed)
+### Clone the repository:
 ```
 git clone https://github.com/sureshchellaboyina/pick-restaurant.git
 cd pick-restaurant
@@ -96,4 +95,4 @@ POST http://localhost:8080/api/lunch/submit-restaurant?sessionId=1&user=raj&rest
 
 ```Response: Session has ended, and restaurant choices cannot be submitted.```
 
-Test Results
+# Test Results
