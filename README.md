@@ -88,44 +88,39 @@ GET http://localhost:8080/api/lunch/get-restaurants?sessionId={sessionId}
 
 GET http://localhost:8080/api/lunch/get-restaurants?sessionId=1
 ```Response:
-
-json
-
-[
+{
   "Saizeriya",
   "mcdonald",
   "korean-hotpot",
   "Mrprata",
   "bananaleaf",
   "MrBiryani"
-]```
-End the Session and Pick a Random Restaurant
+} ```
+
+### End the Session and Pick a Random Restaurant
 POST http://localhost:8080/api/lunch/end-session?sessionId={initiator}&user={initiator}
 
-Example:
+# Example:
 
-shell
-Copy code
+
 POST http://localhost:8080/api/lunch/end-session?sessionId=1&user=Suresh
-Response: Session ended. Selected restaurant: Mrprata
+```Response: Session ended. Selected restaurant: Mrprata```
 
 ErrorResponse: If the user is trying to join a session after it has ended
 
-Example:
+# Example:
 
-shell
-Copy code
+
 POST http://localhost:8080/api/lunch/join-session?sessionId=1&user=raj
-Response: Session has ended and cannot be joined.
+```Response: Session has ended and cannot be joined.```
 
 ErrorResponse: If the user is trying to submit a restaurant choice after the session has ended
 
-Example:
+#  Example:
 
-shell
-Copy code
+
 POST http://localhost:8080/api/lunch/submit-restaurant?sessionId=1&user=raj&restaurant=kopitiam
-Response: Session has ended, and restaurant choices cannot be submitted.
+```Response: Session has ended, and restaurant choices cannot be submitted.```
 
 Test Results
 <!-- Include any relevant test results and information here. -->
