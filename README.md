@@ -19,7 +19,7 @@ POST http://localhost:8080/api/lunch/create-session
 "initiator": "Suresh"
 }
 
-Session created successfully
+`Session created successfully`
 
 
 
