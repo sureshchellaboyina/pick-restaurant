@@ -3,9 +3,7 @@ package com.suresh.restaurantchoice.lunchpreference.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity
@@ -27,13 +25,18 @@ public class LunchPreference {
     private List<String> invitedUsers;
 
     @ElementCollection
-    private List<String> joinedUsers;
+    private List<String> joinedUsers=new LinkedList<>();
 
     @ElementCollection
-    private List<String> restaurantChoices;
+    private List<String> restaurantChoices =new LinkedList<>();
 
     @ElementCollection
     private Set<String> submittedUsers = new HashSet<>();
+
+    public LunchPreference() {
+        invitedUsers = new LinkedList<>();
+        invitedUsers = new ArrayList<>();
+    }
 
     // Constructors, getters, and setters
 }

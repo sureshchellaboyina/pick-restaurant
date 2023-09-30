@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lunch Preferences</title>
+</head>
+<body>
+<h1>Submit Lunch Preference</h1>
+
+<form action="/submit" method="post" th:object="${preference}">
+    <label for="teamMember">Team Member:</label>
+    <input type="text" id="teamMember" name="teamMember" th:field="*{teamMember}" required><br><br>
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" th:field="*{location}" required><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

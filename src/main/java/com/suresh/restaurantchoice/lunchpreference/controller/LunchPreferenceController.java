@@ -4,6 +4,7 @@ import com.suresh.restaurantchoice.lunchpreference.model.LunchPreference;
 import com.suresh.restaurantchoice.lunchpreference.repository.LunchPreferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +19,18 @@ public class LunchPreferenceController {
     @Autowired
     public LunchPreferenceController(LunchPreferenceRepository preferenceRepository) {
         this.preferenceRepository = preferenceRepository;
+    }
+    @GetMapping("/submit")
+    public String showLunchPreferenceForm(Model model) {
+        model.addAttribute("preference", new LunchPreference());
+        return "restaurant-choice";
+    }
+
+    @PostMapping("/submit")
+    public String submitLunchPreference(@ModelAttribute("preference") LunchPreference preference) {
+        // Process and save the lunch preference in the back-end
+
+        return "redirect:/submit"; // Redirect to the form page after submission
     }
 
       @PostMapping("/create-session")
