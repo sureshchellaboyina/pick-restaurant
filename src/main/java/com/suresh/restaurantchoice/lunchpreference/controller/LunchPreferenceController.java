@@ -2,8 +2,14 @@ package com.suresh.restaurantchoice.lunchpreference.controller;
 
 import com.suresh.restaurantchoice.lunchpreference.model.LunchPreference;
 import com.suresh.restaurantchoice.lunchpreference.repository.LunchPreferenceRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
@@ -13,6 +19,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/api/lunch")
+@Api(tags = "Lunch Preference Controller", description = "Endpoints related to lunch preferences")
 public class LunchPreferenceController {
     private final LunchPreferenceRepository preferenceRepository;
 
@@ -21,7 +28,7 @@ public class LunchPreferenceController {
         this.preferenceRepository = preferenceRepository;
     }
 
-    @GetMapping("/submit")
+ /*   @GetMapping("/submit")
     public String showLunchPreferenceForm(Model model) {
         model.addAttribute("preference", new LunchPreference());
         return "restaurant-choice";
@@ -32,15 +39,25 @@ public class LunchPreferenceController {
         // Process and save the lunch preference in the back-end
 
         return "redirect:/submit"; // Redirect to the form page after submission
-    }
+    }*/
 
     @PostMapping("/create-session")
+    @ApiOperation(value = "Create a lunch session", notes = "Creates a new lunch session with the given preferences.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Session created successfully"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
     public ResponseEntity<String> createSession(@RequestBody LunchPreference preference) {
         preferenceRepository.save(preference);
         return ResponseEntity.ok("Session created successfully");
     }
 
     @PostMapping("/invite")
+    @ApiOperation(value = "invites users to a session", notes = "invite the list of users for session to join")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "invited successfully"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
     public ResponseEntity<String> inviteToSession(
             @RequestParam("sessionId") Long sessionId,
             @RequestParam("users") List<String> users) {
@@ -61,6 +78,11 @@ public class LunchPreferenceController {
 
 
     @PostMapping("/submit-restaurant")
+    @ApiOperation(value = "submits a restaurant choice", notes = "User submits their choice of restaurant")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Restaurant submitted successfully"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
     public ResponseEntity<String> submitRestaurantChoice(
             @RequestParam("sessionId") Long sessionId,
             @RequestParam("user") String user,
@@ -96,6 +118,11 @@ public class LunchPreferenceController {
 
 
     @GetMapping("/get-restaurants")
+    @ApiOperation(value = "list all the restaurants", notes = "lists the restaurants that have been submitted")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Listed the restaurants successfully"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
     public ResponseEntity<List<String>> getSubmittedRestaurants(@RequestParam("sessionId") Long sessionId) {
         Optional<LunchPreference> optionalPreference = preferenceRepository.findById(sessionId);
 
@@ -109,6 +136,11 @@ public class LunchPreferenceController {
     }
 
     @PostMapping("/end-session")
+    @ApiOperation(value = "ends the session", notes = "ends the session initiated by the initiator")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ended the session successfully"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
     public ResponseEntity<String> endSession(@RequestParam("sessionId") Long sessionId, @RequestParam("user") String user) {
         Optional<LunchPreference> optionalPreference = preferenceRepository.findById(sessionId);
 
@@ -132,6 +164,11 @@ public class LunchPreferenceController {
     }
 
     @PostMapping("/join-session")
+    @ApiOperation(value = "joins the session", notes = "user joins the session ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "joined the session successfully"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
     public ResponseEntity<String> joinSession(@RequestParam("sessionId") Long sessionId, @RequestParam("user") String user) {
         Optional<LunchPreference> optionalPreference = preferenceRepository.findById(sessionId);
 
@@ -155,6 +192,11 @@ public class LunchPreferenceController {
     }
 
     @GetMapping("/{sessionId}/picked-restaurant")
+    @ApiOperation(value = "randomly selected restaurant", notes = "restaurant picked randomly when initiator ends the session ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "random selection is successful"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
     public ResponseEntity<String> getPickedRestaurant(@PathVariable Long sessionId) {
 
         Optional<LunchPreference> pickedRestaurant = preferenceRepository.findById(sessionId);

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @SpringBootTest
 class LunchPreferenceApplicationTests {
@@ -112,6 +114,73 @@ class LunchPreferenceApplicationTests {
 
 		ResponseEntity<String> response = controller.joinSession(sessionId, user);
 		assertEquals("Suresh joined the session.restaurants submitted by other users []", response.getBody());
+	}
+
+	// negative test cases
+	@Test
+	void testInviteToSession_SessionNotFound() {
+		Long sessionId = 1L;
+		List<String> users = Arrays.asList("John","Peter");
+		when(preferenceRepository.findById(sessionId)).thenReturn(Optional.empty());
+
+		ResponseEntity<String> response = controller.inviteToSession(sessionId, users);
+		assertEquals(BAD_REQUEST, response.getStatusCode());
+		assertEquals("Session not found.", response.getBody());
+	}
+
+	@Test
+	void testInviteToSession_UserNotInvited() {
+		Long sessionId = 1L;
+		List<String> users = Arrays.asList("John","Peter");
+		LunchPreference preference = new LunchPreference();
+		preference.setId(sessionId);
+		when(preferenceRepository.findById(sessionId)).thenReturn(Optional.of(preference));
+
+		ResponseEntity<String> response = controller.inviteToSession(sessionId, users);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals("John, Peter invited to the session.", response.getBody());
+	}
+
+	@Test
+	void testSubmitRestaurantChoice_SessionNotFound() {
+		Long sessionId = 1L;
+		String user = "John";
+		String restaurant = "Restaurant A";
+		when(preferenceRepository.findById(sessionId)).thenReturn(Optional.empty());
+
+		ResponseEntity<String> response = controller.submitRestaurantChoice(sessionId, user, restaurant);
+		assertEquals(BAD_REQUEST, response.getStatusCode());
+		assertEquals("Session not found.", response.getBody());
+	}
+
+	@Test
+	void testSubmitRestaurantChoice_UserNotJoined() {
+		Long sessionId = 1L;
+		String user = "John";
+		String restaurant = "Restaurant A";
+		LunchPreference preference = new LunchPreference();
+		preference.setId(sessionId);
+		when(preferenceRepository.findById(sessionId)).thenReturn(Optional.of(preference));
+
+		ResponseEntity<String> response = controller.submitRestaurantChoice(sessionId, user, restaurant);
+		assertEquals(BAD_REQUEST, response.getStatusCode());
+		assertEquals("John is not part of the session and cannot submit a restaurant choice.", response.getBody());
+	}
+
+	@Test
+	void testSubmitRestaurantChoice_UserAlreadySubmittedChoice() {
+		Long sessionId = 1L;
+		String user = "John";
+		String restaurant = "Restaurant A";
+		LunchPreference preference = new LunchPreference();
+		preference.setId(sessionId);
+		preference.getJoinedUsers().add(user); // Simulate that the user has joined
+		preference.getSubmittedUsers().add(user); // Simulate that the user has already submitted
+		when(preferenceRepository.findById(sessionId)).thenReturn(Optional.of(preference));
+
+		ResponseEntity<String> response = controller.submitRestaurantChoice(sessionId, user, restaurant);
+		assertEquals(BAD_REQUEST, response.getStatusCode());
+		assertEquals("John is not part of the session and cannot submit a restaurant choice.", response.getBody());
 	}
 
 }
