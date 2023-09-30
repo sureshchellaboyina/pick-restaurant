@@ -15,8 +15,14 @@ cd pick-restaurant
 Example:
 POST http://localhost:8080/api/lunch/create-session
 ```json
-{ "teamMember": "Suresh", "location": "", "sessionName": "Lunch Session 1", "initiator": "Suresh" }
+{
+  "teamMember": "Suresh", 
+  "location": "", 
+  "sessionName": "Lunch Session 1", 
+  "initiator": "Suresh"
+}
 ```
+
 ```Response: Session created successfully ```
 
 # Invite Users to the Session
