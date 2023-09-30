@@ -5,7 +5,6 @@ import com.suresh.restaurantchoice.lunchpreference.repository.LunchPreferenceRep
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -21,40 +20,7 @@ public class LunchPreferenceController {
         this.preferenceRepository = preferenceRepository;
     }
 
-   /* @PostMapping("/submit")
-    public ResponseEntity<String> submitPreference(@RequestBody LunchPreference preference) {
-        preferenceRepository.save(preference);
-        return ResponseEntity.ok("Preference submitted successfully");
-    }*/
- /*  @PostMapping("/submit")
-   public ResponseEntity<String> submitPreference(@RequestBody LunchPreference preference) {
-  *//*     LunchPreference newPreference = new LunchPreference();
-       newPreference.setTeamMember(preference.getTeamMember());
-       newPreference.setLocation(preference.getLocation());
-       preferenceRepository.save(newPreference);
-       return ResponseEntity.ok("Preference submitted successfully");*//*
-       Optional<LunchPreference> existingPreference = preferenceRepository
-               .findBySessionNameAndTeamMember(preference.getSessionName(), preference.getTeamMember());
-
-       if (existingPreference.isPresent()) {
-           return ResponseEntity.badRequest().body("You have already submitted your preference for this session.");
-       }
-
-       // Continue with preference submission
-       LunchPreference newPreference = new LunchPreference();
-       newPreference.setTeamMember(preference.getTeamMember());
-       newPreference.setLocation(preference.getLocation());
-       newPreference.setSessionName(preference.getSessionName());
-       newPreference.setInitiator(preference.getInitiator());
-       newPreference.getInvitedUsers().add(preference.getTeamMember());
-       newPreference.getSubmittedUsers().add(preference.getTeamMember()); // Mark user as submitted
-       preferenceRepository.save(newPreference);
-
-       return ResponseEntity.ok("Preference submitted successfully");
-   }*/
-
-
-    @PostMapping("/create-session")
+      @PostMapping("/create-session")
     public ResponseEntity<String> createSession(@RequestBody LunchPreference preference) {
         preferenceRepository.save(preference);
         return ResponseEntity.ok("Session created successfully");
@@ -76,26 +42,7 @@ public class LunchPreferenceController {
         }
     }
 
-    /*@PostMapping("/submit-restaurant")
-    public ResponseEntity<String> submitRestaurantChoice(
-            @RequestParam("sessionId") Long sessionId,
-            @RequestParam("user") String user,
-            @RequestParam("restaurant") String restaurant) {
-        Optional<LunchPreference> optionalPreference = preferenceRepository.findById(sessionId);
 
-        if (optionalPreference.isPresent()) {
-            LunchPreference preference = optionalPreference.get();
-            if (preference.getInvitedUsers().contains(user)) {
-                preference.getRestaurantChoices().add(restaurant);
-                preferenceRepository.save(preference);
-                return ResponseEntity.ok(user + " submitted restaurant choice: " + restaurant);
-            } else {
-                return ResponseEntity.badRequest().body(user + " is not part of the session.");
-            }
-        } else {
-            return ResponseEntity.badRequest().body("Session not found.");
-        }
-    }*/
     @PostMapping("/submit-restaurant")
     public ResponseEntity<String> submitRestaurantChoice(
             @RequestParam("sessionId") Long sessionId,
