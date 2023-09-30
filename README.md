@@ -15,11 +15,12 @@ To run the lunch-preference API locally using Maven, follow these steps:
    ./mvnw spring-boot:run
    ```
 
-### API Response**
-### Create Session**
-### Example:**
+### API Response
+### Create Session
+### Example:
 
 POST http://localhost:8080/api/lunch/create-session
+
 {
   "teamMember": "Suresh",
   "location": "",
