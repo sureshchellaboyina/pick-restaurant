@@ -14,9 +14,9 @@ cd pick-restaurant
 # Create Session
 Example:
 POST http://localhost:8080/api/lunch/create-session
-
+```json
 { "teamMember": "Suresh", "location": "", "sessionName": "Lunch Session 1", "initiator": "Suresh" }
-
+```
 ```Response: Session created successfully ```
 
 # Invite Users to the Session
@@ -71,7 +71,7 @@ GET http://localhost:8080/api/lunch/get-restaurants?sessionId={sessionId}
 Example:
 GET http://localhost:8080/api/lunch/get-restaurants?sessionId=1
 
-Response: { "Saizeriya", "mcdonald", "korean-hotpot", "Mrprata", "bananaleaf", "MrBiryani" }
+Response: ```json{ "Saizeriya", "mcdonald", "korean-hotpot", "Mrprata", "bananaleaf", "MrBiryani" }```
 
 # End the Session and Pick a Random Restaurant
 POST http://localhost:8080/api/lunch/end-session?sessionId={initiator}&user={initiator}
