@@ -1,18 +1,18 @@
-# Lunch Preference Application README
-
 ## Getting Started
 
 This backend version of the lunch-preference application provides REST API endpoints.
 
 ### Running lunch-preference API locally
+### With maven command line (Set JAVA_HOME if needed)
 
 To run the lunch-preference API locally using Maven, follow these steps:
 
 1. Clone the repository:
 
-   ```shell
+   ```
    git clone https://github.com/sureshchellaboyina/pick-restaurant.git
    cd pick-restaurant
+   ```
 Run the application with Maven (Make sure to set JAVA_HOME if needed):
 
 shell
