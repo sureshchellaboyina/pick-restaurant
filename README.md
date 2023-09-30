@@ -29,7 +29,7 @@ Copy code
   "sessionName": "Lunch Session 1",
   "initiator": "Suresh"
 }
-Response: Session created successfully
+```Response: Session created successfully```
 
 Invite Users to the Session
 POST http://localhost:8080/api/lunch/invite?sessionId={sessionId}&user={user}
