@@ -20,6 +20,7 @@ public class LunchPreferenceController {
     public LunchPreferenceController(LunchPreferenceRepository preferenceRepository) {
         this.preferenceRepository = preferenceRepository;
     }
+
     @GetMapping("/submit")
     public String showLunchPreferenceForm(Model model) {
         model.addAttribute("preference", new LunchPreference());
@@ -33,7 +34,7 @@ public class LunchPreferenceController {
         return "redirect:/submit"; // Redirect to the form page after submission
     }
 
-      @PostMapping("/create-session")
+    @PostMapping("/create-session")
     public ResponseEntity<String> createSession(@RequestBody LunchPreference preference) {
         preferenceRepository.save(preference);
         return ResponseEntity.ok("Session created successfully");
@@ -42,14 +43,17 @@ public class LunchPreferenceController {
     @PostMapping("/invite")
     public ResponseEntity<String> inviteToSession(
             @RequestParam("sessionId") Long sessionId,
-            @RequestParam("user") String user) {
+            @RequestParam("users") List<String> users) {
         Optional<LunchPreference> optionalPreference = preferenceRepository.findById(sessionId);
 
         if (optionalPreference.isPresent()) {
             LunchPreference preference = optionalPreference.get();
-            preference.getInvitedUsers().add(user);
+            for (String user : users) {
+                preference.getInvitedUsers().add(user);
+            }
             preferenceRepository.save(preference);
-            return ResponseEntity.ok(user + " invited to the session.");
+            String invitedUsers = String.join(", ", users);
+            return ResponseEntity.ok(invitedUsers + " invited to the session.");
         } else {
             return ResponseEntity.badRequest().body("Session not found.");
         }
@@ -67,14 +71,14 @@ public class LunchPreferenceController {
             LunchPreference preference = optionalPreference.get();
 
             if (preference.isEnded()) {
-                return ResponseEntity.badRequest().body("Session has ended, and restaurant choices cannot be submitted.");
+                return ResponseEntity.badRequest().body("Session has ended, and restaurant choices cannot be submitted."+" Restaurant selected during the random pick is "+preference.getSelectedRestaurant());
             }
 
             if (!preference.getInvitedUsers().contains(user)) {
                 return ResponseEntity.badRequest().body(user + " is not part of the session and cannot submit a restaurant choice.");
             }
 
-           if (!preference.getJoinedUsers().contains(user)) {
+            if (!preference.getJoinedUsers().contains(user)) {
                 return ResponseEntity.badRequest().body(user + " must join the session before submitting a restaurant choice.");
             }
             if (preference.getSubmittedUsers().contains(user)) {
@@ -134,20 +138,31 @@ public class LunchPreferenceController {
         if (optionalPreference.isPresent()) {
             LunchPreference preference = optionalPreference.get();
             if (preference.isEnded()) {
-                return ResponseEntity.badRequest().body("Session has ended and cannot be joined.");
+                return ResponseEntity.badRequest().body("Session has ended and cannot be joined. "+" Restaurant selected during the random pick is "+preference.getSelectedRestaurant());
             }
             if (preference.getInvitedUsers().contains(user)) {
-              //  preference.getInvitedUsers().add(user);
+                //  preference.getInvitedUsers().add(user);
                 preference.getJoinedUsers().add(user);
                 preferenceRepository.save(preference);
-                return ResponseEntity.ok(user + " joined the session.");
-            }
-            else {
-             //   return ResponseEntity.badRequest().body("Session has ended and cannot be joined.");
+                return ResponseEntity.ok(user + " joined the session."+"restaurants submitted by other users "+preference.getRestaurantChoices());
+            } else {
+                //   return ResponseEntity.badRequest().body("Session has ended and cannot be joined.");
                 return ResponseEntity.badRequest().body(user + " is not invited to the session.");
             }
         } else {
             return ResponseEntity.badRequest().body("Session not found.");
         }
     }
+
+    @GetMapping("/{sessionId}/picked-restaurant")
+    public ResponseEntity<String> getPickedRestaurant(@PathVariable Long sessionId) {
+
+        Optional<LunchPreference> pickedRestaurant = preferenceRepository.findById(sessionId);
+        if (pickedRestaurant.isPresent()) {
+           return ResponseEntity.ok("restaurant " + pickedRestaurant.get().getSelectedRestaurant() + " has been picked randomly");
+        } else {
+            return ResponseEntity.ok("no restaurants found");
+        }
+    }
+
 }

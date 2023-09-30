@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,13 +64,13 @@ class LunchPreferenceApplicationTests {
 	@Test
 	void testInviteToSession() {
 		Long sessionId = 1L;
-		String user = "Suresh";
+		List<String> user = Arrays.asList("Suresh","Kumar");
 		LunchPreference preference = new LunchPreference();
 		preference.setId(sessionId);
 		when(preferenceRepository.findById(sessionId)).thenReturn(Optional.of(preference));
 
 		ResponseEntity<String> response = controller.inviteToSession(sessionId, user);
-		assertEquals("Suresh invited to the session.", response.getBody());
+		assertEquals("Suresh, Kumar invited to the session.", response.getBody());
 	}
 
 	@Test
@@ -109,7 +111,7 @@ class LunchPreferenceApplicationTests {
 		when(preferenceRepository.findById(sessionId)).thenReturn(Optional.of(preference));
 
 		ResponseEntity<String> response = controller.joinSession(sessionId, user);
-		assertEquals("Suresh joined the session.", response.getBody());
+		assertEquals("Suresh joined the session.restaurants submitted by other users []", response.getBody());
 	}
 
 }
