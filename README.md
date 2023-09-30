@@ -96,3 +96,4 @@ POST http://localhost:8080/api/lunch/submit-restaurant?sessionId=1&user=raj&rest
 ```Response: Session has ended, and restaurant choices cannot be submitted.```
 
 # Test Results
+![Test Results](./testcases.jpg)
