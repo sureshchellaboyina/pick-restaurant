@@ -35,70 +35,62 @@ POST http://localhost:8080/api/lunch/invite?sessionId={sessionId}&user={user}
 
 Example:
 
-shell
-Copy code
 POST http://localhost:8080/api/lunch/invite?sessionId=1&user=sam
-Response: sam invited to the session.
 
-Joining Session
+```Response: sam invited to the session.```
+
+### Joining Session
 POST http://localhost:8080/api/lunch/join-session?sessionId={sessionId}&user={user}
 
-Example:
+### Example:
 
-shell
-Copy code
 POST http://localhost:8080/api/lunch/join-session?sessionId=1&user=sam
-Response: sam joined the session.
+```Response: sam joined the session.```
 
 ErrorResponse: If the user is not invited to join the session but tries to join
 
-Example:
+### Example:
 
-shell
-Copy code
+
 POST http://localhost:8080/api/lunch/join-session?sessionId=1&user=peter
-Response: peter is not invited to the session.
+```Response: peter is not invited to the session.```
 
-Submitting Restaurant Choice
+### Submitting Restaurant Choice
 POST http://localhost:8080/api/lunch/submit-restaurant?sessionId={sessionId}&user={user}&restaurant={restaurant-choice}
 
-Example:
+# Example:
 
-shell
-Copy code
+
 POST http://localhost:8080/api/lunch/submit-restaurant?sessionId=1&user=sam&restaurant=Saizeriya
-Response: sam submitted restaurant choice: Saizeriya
+```Response: sam submitted restaurant choice: Saizeriya```
 
 ErrorResponse: If the user is trying to submit a restaurant choice without joining the session
 
-Example:
+#  Example:
 
-shell
-Copy code
+
 POST http://localhost:8080/api/lunch/submit-restaurant?sessionId=1&user=peter&restaurant=KFC
-Response: peter is not part of the session and cannot submit a restaurant choice.
+```Response: peter is not part of the session and cannot submit a restaurant choice.```
 
 ErrorResponse: If the same user is trying to submit a restaurant choice again
 
-Example:
+# Example:
 
-shell
-Copy code
+
 POST http://localhost:8080/api/lunch/submit-restaurant?sessionId=1&user=sam&restaurant=mcdonald
-Response: sam, you have already submitted a restaurant choice for this session.
+```Response: sam, you have already submitted a restaurant choice for this session.```
 
-Get All Submitted Restaurants
+### Get All Submitted Restaurants
 GET http://localhost:8080/api/lunch/get-restaurants?sessionId={sessionId}
 
-Example:
+# Example:
 
-shell
-Copy code
+
 GET http://localhost:8080/api/lunch/get-restaurants?sessionId=1
-Response:
+```Response:
 
 json
-Copy code
+
 [
   "Saizeriya",
   "mcdonald",
@@ -106,7 +98,7 @@ Copy code
   "Mrprata",
   "bananaleaf",
   "MrBiryani"
-]
+]```
 End the Session and Pick a Random Restaurant
 POST http://localhost:8080/api/lunch/end-session?sessionId={initiator}&user={initiator}
 
