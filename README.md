@@ -2,8 +2,8 @@
 
 This backend version of the lunch-preference application provides REST API endpoints.
 
-### Running lunch-preference API locally
-### With maven command line (Set JAVA_HOME if needed)
+** Running lunch-preference API locally**
+** With maven command line (Set JAVA_HOME if needed)**
 
 To run the lunch-preference API locally using Maven, follow these steps:
 
@@ -12,15 +12,12 @@ To run the lunch-preference API locally using Maven, follow these steps:
    ```
    git clone https://github.com/sureshchellaboyina/pick-restaurant.git
    cd pick-restaurant
+   ./mvnw spring-boot:run
    ```
-Run the application with Maven (Make sure to set JAVA_HOME if needed):
 
-shell
-Copy code
-./mvnw spring-boot:run
-API Response
-Create Session
-Example:
+**API Response**
+**Create Session**
+**Example:**
 
 POST http://localhost:8080/api/lunch/create-session
 
