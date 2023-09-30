@@ -91,6 +91,7 @@ GET http://localhost:8080/api/lunch/get-restaurants?sessionId={sessionId}
 # Example:
 
 GET http://localhost:8080/api/lunch/get-restaurants?sessionId=1
+
 Response:
 {
   "Saizeriya",
