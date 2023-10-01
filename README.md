@@ -40,13 +40,13 @@ POST http://localhost:8080/api/lunch/create-session
 ```Response: Session created successfully ```
 
 # Invite Users to the Session
-POST http://localhost:8080/api/lunch/invite?sessionId={sessionId}&user={user}
+POST http://localhost:8080/api/lunch/invite?sessionId={sessionId}&users={user1,user2,...}
 
 Example:
 
-POST http://localhost:8080/api/lunch/invite?sessionId=1&user=sam
+POST http://localhost:8080/api/lunch/invite?sessionId=1&users=sam,peter
 
-```Response: sam invited to the session.```
+```Response: sam,peter invited to the session.```
 
 # Joining Session
 POST http://localhost:8080/api/lunch/join-session?sessionId={sessionId}&user={user}
@@ -124,6 +124,21 @@ Example:
 POST http://localhost:8080/api/lunch/submit-restaurant?sessionId=1&user=raj&restaurant=kopitiam
 
 ```Response: Session has ended, and restaurant choices cannot be submitted.```
+
+# Accessing H2 console ( in-memory database)
+   http://localhost:8080/h2-console
+# Tables and Sqls
+   ```
+   select * from LUNCH_PREFERENCE
+   select * from LUNCH_PREFERENCE_INVITED_USERS
+   select * from LUNCH_PREFERENCE_JOINED_USERS
+   select * from LUNCH_PREFERENCE_RESTAURANT_CHOICES
+   select  *  from LUNCH_PREFERENCE_SUBMITTED_USERS 
+   
+   ```
+
+# Test Results
+![H2 console Image](./h2console.jpg)
 
 # Test Results
 ![Test Results](./testcases.jpg)

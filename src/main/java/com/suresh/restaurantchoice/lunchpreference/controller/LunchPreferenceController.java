@@ -26,7 +26,7 @@ public class LunchPreferenceController {
     }
 
     @PostMapping("/create-session")
-    @ApiOperation(value = "Create a lunch session", notes = "Creates a new lunch session with the given preferences.")
+    @ApiOperation(value = "Create a lunch session", notes = "creates a new lunch session with the given preferences.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Session created successfully"),
             @ApiResponse(code = 400, message = "Bad request")
@@ -47,7 +47,7 @@ public class LunchPreferenceController {
             @RequestParam("users") List<String> users) {
         Optional<LunchPreference> optionalPreference = preferenceRepository.findById(sessionId);
 
-        if (optionalPreference.isPresent()) {
+        if (optionalPreference.isPresent() && !optionalPreference.get().isEnded()) {
             LunchPreference preference = optionalPreference.get();
             for (String user : users) {
                 preference.getInvitedUsers().add(user);
@@ -127,16 +127,21 @@ public class LunchPreferenceController {
     })
     public ResponseEntity<String> endSession(@RequestParam("sessionId") Long sessionId, @RequestParam("user") String user) {
         Optional<LunchPreference> optionalPreference = preferenceRepository.findById(sessionId);
-
+        String selectedRestaurant ="";
         if (optionalPreference.isPresent()) {
             LunchPreference preference = optionalPreference.get();
             if (preference.getInitiator().equals(user)) {
                 preference.setEnded(true);
                 // Implement logic to randomly select a restaurant from submitted choices
                 Random random = new Random();
-                int randomIndex = random.nextInt(preference.getRestaurantChoices().size());
-                String selectedRestaurant = preference.getRestaurantChoices().get(randomIndex);
-                preference.setSelectedRestaurant(selectedRestaurant);
+                if (preference.getRestaurantChoices().isEmpty()) {
+                    preferenceRepository.save(preference);
+                    return ResponseEntity.ok("Session ended. no restaurants submitted " + selectedRestaurant);
+                } else {
+                    int randomIndex = random.nextInt(preference.getRestaurantChoices().size());
+                     selectedRestaurant = preference.getRestaurantChoices().get(randomIndex);
+                    preference.setSelectedRestaurant(selectedRestaurant);
+                }
                 preferenceRepository.save(preference);
                 return ResponseEntity.ok("Session ended. Selected restaurant: " + selectedRestaurant);
             } else {
