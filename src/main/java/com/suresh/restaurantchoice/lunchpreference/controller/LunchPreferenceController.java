@@ -32,8 +32,8 @@ public class LunchPreferenceController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     public ResponseEntity<String> createSession(@RequestBody LunchPreference preference) {
-        preferenceRepository.save(preference);
-        return ResponseEntity.ok("Session created successfully--> " + preference.getId());
+       LunchPreference lunchPreference= preferenceRepository.save(preference);
+        return ResponseEntity.ok("Session created successfully--> " + lunchPreference.getId());
     }
 
     @PostMapping("/invite")

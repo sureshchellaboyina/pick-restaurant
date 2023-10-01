@@ -40,10 +40,11 @@ class LunchPreferenceApplicationTests {
     @Test
     void testCreateSession() {
         LunchPreference preference = new LunchPreference();
+        preference.setId(1L);
         when(preferenceRepository.save(any(LunchPreference.class))).thenReturn(preference);
 
         ResponseEntity<String> response = controller.createSession(preference);
-        assertEquals("Session created successfully", response.getBody());
+        assertEquals("Session created successfully--> "+preference.getId(), response.getBody());
     }
 
     @Test
