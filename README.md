@@ -134,10 +134,8 @@ POST http://localhost:8080/api/lunch/submit-restaurant?sessionId=1&user=raj&rest
    select * from LUNCH_PREFERENCE_JOINED_USERS
    select * from LUNCH_PREFERENCE_RESTAURANT_CHOICES
    select  *  from LUNCH_PREFERENCE_SUBMITTED_USERS 
-   
    ```
-
-# Test Results
+# H2 console
 ![H2 console Image](./h2console.jpg)
 
 # Test Results
