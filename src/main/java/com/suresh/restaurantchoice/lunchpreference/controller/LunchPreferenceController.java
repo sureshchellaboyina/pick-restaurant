@@ -62,7 +62,7 @@ public class LunchPreferenceController {
 
 
     @PostMapping("/submit-restaurant")
-    @ApiOperation(value = "submits a restaurant choice", notes = "User submits their choice of restaurant")
+    @ApiOperation(value = "submits a restaurant choice", notes = "user submits their choice of restaurant")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Restaurant submitted successfully"),
             @ApiResponse(code = 400, message = "Bad request")
