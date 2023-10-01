@@ -28,19 +28,6 @@ public class LunchPreferenceController {
         this.preferenceRepository = preferenceRepository;
     }
 
- /*   @GetMapping("/submit")
-    public String showLunchPreferenceForm(Model model) {
-        model.addAttribute("preference", new LunchPreference());
-        return "restaurant-choice";
-    }
-
-    @PostMapping("/submit")
-    public String submitLunchPreference(@ModelAttribute("preference") LunchPreference preference) {
-        // Process and save the lunch preference in the back-end
-
-        return "redirect:/submit"; // Redirect to the form page after submission
-    }*/
-
     @PostMapping("/create-session")
     @ApiOperation(value = "Create a lunch session", notes = "Creates a new lunch session with the given preferences.")
     @ApiResponses({
@@ -53,7 +40,7 @@ public class LunchPreferenceController {
     }
 
     @PostMapping("/invite")
-    @ApiOperation(value = "invites users to a session", notes = "invite the list of users for session to join")
+    @ApiOperation(value = "invites users to a session", notes = "invite the users to join the session and submit their choice")
     @ApiResponses({
             @ApiResponse(code = 200, message = "invited successfully"),
             @ApiResponse(code = 400, message = "Bad request")
@@ -118,7 +105,7 @@ public class LunchPreferenceController {
 
 
     @GetMapping("/get-restaurants")
-    @ApiOperation(value = "list all the restaurants", notes = "lists the restaurants that have been submitted")
+    @ApiOperation(value = "list all the restaurants", notes = "lists the restaurants that have been submitted by all users")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Listed the restaurants successfully"),
             @ApiResponse(code = 400, message = "Bad request")
@@ -164,7 +151,7 @@ public class LunchPreferenceController {
     }
 
     @PostMapping("/join-session")
-    @ApiOperation(value = "joins the session", notes = "user joins the session ")
+    @ApiOperation(value = "joins the session", notes = "user joins the session only after invited , uninvited users cannot join")
     @ApiResponses({
             @ApiResponse(code = 200, message = "joined the session successfully"),
             @ApiResponse(code = 400, message = "Bad request")

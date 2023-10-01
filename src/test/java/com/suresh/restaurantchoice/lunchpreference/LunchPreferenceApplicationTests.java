@@ -42,19 +42,6 @@ class LunchPreferenceApplicationTests {
 	}
 
 	@Test
-	void testShowLunchPreferenceForm() {
-		String viewName = controller.showLunchPreferenceForm(model);
-		assertEquals("restaurant-choice", viewName);
-	}
-
-	@Test
-	void testSubmitLunchPreference() {
-		LunchPreference preference = new LunchPreference();
-		String viewName = controller.submitLunchPreference(preference);
-		assertEquals("redirect:/submit", viewName);
-	}
-
-	@Test
 	void testCreateSession() {
 		LunchPreference preference = new LunchPreference();
 		when(preferenceRepository.save(any(LunchPreference.class))).thenReturn(preference);

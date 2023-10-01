@@ -1,3 +1,14 @@
+# Lunch preference (pick-restaurant)
+Welcome to the documentation for Lunch preference (pick-restaurant). This document provides an overview of the project and instructions on how to use it.
+
+## Swagger API Documentation
+We provide API documentation using Swagger, which allows you to explore and test the API endpoints interactively. To access the Swagger documentation, follow these steps:
+
+1. Ensure that the project is running and the API is accessible.
+2. Open your web browser and navigate to the Swagger UI page:
+   [Swagger UI](http://localhost:8080/swagger-ui/index.html)  
+3. You should see the API documentation, where you can view all available endpoints, their descriptions, and test them using the interactive interface.
+4. complete steps on creating the session and selecting the restaurant
 ### Getting Started
 This backend version of the lunch-preference application provides REST API endpoints.
 
@@ -7,7 +18,10 @@ This backend version of the lunch-preference application provides REST API endpo
 ```
 git clone https://github.com/sureshchellaboyina/pick-restaurant.git
 cd pick-restaurant
+# on linux / macos
 ./mvnw spring-boot:run
+# on windows
+mvnw spring-boot:run
 ```
 ### API Response
 
@@ -16,10 +30,10 @@ Example:
 POST http://localhost:8080/api/lunch/create-session
 ```json
 {
-  "teamMember": "Suresh", 
-  "location": "", 
+  "teamMember": "suresh", 
+  "location": "restaurant", 
   "sessionName": "Lunch Session 1", 
-  "initiator": "Suresh"
+  "initiator": "suresh"
 }
 ```
 
