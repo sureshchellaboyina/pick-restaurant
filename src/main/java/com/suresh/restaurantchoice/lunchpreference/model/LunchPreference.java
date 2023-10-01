@@ -1,7 +1,6 @@
 package com.suresh.restaurantchoice.lunchpreference.model;
 
 import lombok.Data;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -37,6 +36,4 @@ public class LunchPreference {
         invitedUsers = new LinkedList<>();
         invitedUsers = new ArrayList<>();
     }
-
-    // Constructors, getters, and setters
 }
