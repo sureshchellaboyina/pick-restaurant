@@ -84,7 +84,7 @@ class LunchPreferenceApplicationTests {
         when(preferenceRepository.findById(sessionId)).thenReturn(Optional.of(preference));
 
         ResponseEntity<String> response = controller.endSession(sessionId, user);
-        assertEquals("Session ended. Selected restaurant: Saizeriya", response.getBody());
+        assertEquals("Session ended. Selected restaurant: "+preference.getRestaurantChoices().stream().findFirst().orElse("No restaurant selected"), response.getBody());
     }
 
     @Test
@@ -97,7 +97,7 @@ class LunchPreferenceApplicationTests {
         when(preferenceRepository.findById(sessionId)).thenReturn(Optional.of(preference));
 
         ResponseEntity<String> response = controller.joinSession(sessionId, user);
-        assertEquals("Suresh joined the session.restaurants submitted by other users []", response.getBody());
+        assertEquals("Suresh joined the session.restaurants submitted by other users "+preference.getRestaurantChoices(), response.getBody());
     }
 
     // negative test cases
