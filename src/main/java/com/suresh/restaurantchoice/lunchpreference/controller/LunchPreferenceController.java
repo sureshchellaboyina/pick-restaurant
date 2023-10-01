@@ -33,7 +33,7 @@ public class LunchPreferenceController {
     })
     public ResponseEntity<String> createSession(@RequestBody LunchPreference preference) {
         preferenceRepository.save(preference);
-        return ResponseEntity.ok("Session created successfully");
+        return ResponseEntity.ok("Session created successfully--> " + preference.getId());
     }
 
     @PostMapping("/invite")
